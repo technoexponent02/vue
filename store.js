@@ -9,7 +9,12 @@ const state = {
   placeAdStep: 0,
   placeAdSelectedCatgStore: {
     title: ''
-  }
+  },
+  placeAdSelectedCatgListViewShow: [],
+  openService: false,
+  serviceStep: 0, // will be 1, 2, 3
+  serviceModalParentId: 0,
+  serviceSelectedStep: []
 }
 
 export default new Vuex.Store({
@@ -24,6 +29,18 @@ export default new Vuex.Store({
     placeAdSelectedCatg(state, payload){
       state.placeAdSelectedCatgStore = payload
     },
+    placeAdSelectedCatgListView(state, payload){
+      state.placeAdSelectedCatgListViewShow = payload
+    },
+    isOpenService(state, payload){
+      state.openService = payload
+    },
+    serviceStepper(state, payload){
+      state.serviceStep = payload
+    },
+    changeServiceSelectedStep(state, payload){
+      state.serviceSelectedStep = payload
+    }
   },
   actions: {
 

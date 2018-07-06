@@ -9,8 +9,8 @@
                 <h2>Create Your Account</h2>
                 <p>Please choose your account type</p>
                 <div class="choosebtn">
-                    <a href="/tootella/public/register-personal">Personal Account</a>
-                    <a href="/tootella/public/register-proffessional">Professional Account</a>
+                    <a href="/register-personal">Personal Account</a>
+                    <a href="/register-proffessional">Professional Account</a>
                 </div>
             </sweet-modal>
         </div>
@@ -38,7 +38,10 @@
                                 <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
                             </div>
                             <div class="formGroup align-center">
-                                <input type="submit" value="Login Now" class="btn btn-warning btn-md lg" />
+                                <button type="submit" :disabled="loader" class="btn btn-warning btn-md lg">
+                                    <i class="fa fa-spinner fa-spin" v-if="loader" style="font-size: 24px;"></i>
+                                    Login Now
+                                </button>
                             </div>
                             <div class="formGroup align-center">
                                 <a href="javascript:void(0);" id="forgetpass" @click="forgetPassToggle">Forget Password</a>
@@ -88,7 +91,8 @@ export default {
             email: '',
             password: ''
         },
-        notforget: true
+        notforget: true,
+        loader: false
     }
   },
   created() {
@@ -110,6 +114,8 @@ export default {
     },
     // login form validate and submit
     loginSubmit(){
+
+        this.loader = true;
 
         HTTP.post(`login`, this.$data.login)
         .then(response => {
@@ -133,18 +139,24 @@ export default {
                 
                 localStorage.setItem('tootellaUser', JSON.stringify(authuser));
 
+                sessionStorage.setItem('tooNotLoggedIn', 0)
+
+                this.loader = false;
+
                 //location.reload();
                 window.location.href = '/profile'
 
             }
             if(data.status == "fail"){
                 alert(data.error_message);
+                this.loader = false;
             }
 
         })
         .catch(e => {
             console.log(e);
             alert('Something went wrong!');
+            this.loader = false;
         })
 
     },
@@ -186,6 +198,7 @@ export default {
 }
 .help.is-danger{
     width: 100%;
+    color: #fff;
 }
 #forgetpass{
     color: #fff;

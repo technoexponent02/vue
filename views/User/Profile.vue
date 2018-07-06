@@ -46,92 +46,17 @@
 
                 <div class="row row_18">
                     <div class="col-lg-3 col-md-3 col-sm-4 leftdbmenucol">
-                        <div class="dbmenutop">
+                        
+                        <user-profile-card></user-profile-card>
 
-                            <i class="material-icons checkedico">check_circle</i>
-                            <figure class="avatardb round center-block">
-                                <img :src="tootellaUser.profile_picture" class="img-responsive">
-                            </figure>
-                            <h2 class="dbavname">{{tootellaUser.first_name+' '+tootellaUser.last_name }}</h2>
-                            <div class="dropdown text-right">
-                                <button @click="seenEdtPrf = !seenEdtPrf" class="exoptionbtn">
-                                    <i class="material-icons">more_horiz</i>
-                                </button>
-                                <ul class="dropdown-menu rightshow" v-if="seenEdtPrf" style="display: block;">
-                                    <li>
-                                        <a @click="toggleEdit" href="javascript:void(0);">Edit profile</a>
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <div class="showdiv sociallinkex">
-                                <ul class="list-inline">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-whatsapp" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-phone" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="white-bg">
-                            <h2 class="panel-title uc text-orange">Quick Links</h2>
-                            <ul class="dbsmmenu list-unstyled">
-                                <li>
-                                    <a href="javascript:void(0);">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Inbox</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Your Listings</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Services</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Paiement</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Our offer</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <left-aside-nav></left-aside-nav>
                     </div>
 
                     <div class="col-lg-9 col-md-9 col-sm-8 procolleft">
                         <div class="white-bg">
                             <div class="borderdiv">
                                 <!-- <div class="coverphoto clearfix" v-if="tootellaUser.type==2"> -->
-                                <div class="coverphoto clearfix">
-                                    <img src="assets/images/cover_profile.jpg" class="img-responsive">
-                                    <!-- <a href="javascript:void(0);" class="btn btn-default btnupload"><img src="assets/images/camera_ico.png" class="img-responsive"></a> -->
-                                    <label class="btn btn-default btnupload">
-                                        <input type="file" class="hidden" name="">
-                                        <img src="assets/images/camera_ico.png" class="img-responsive">
-                                    </label>
-                                </div>
+                                <profile-cover></profile-cover>
 
                                 <div class="panel-body relative">
                                     <div class="prtopbtn clearfix">
@@ -148,8 +73,9 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <h2 class="nameavatar" v-if="tootellaUser.type == 2">{{tootellaUser.designation + ' at '+tootellaUser.company_name}}</h2>
-                                        <!-- 	<h2 class="designation">Cora T. Colucci</h2> -->
+                                        <h2 class="nameavatar" v-if="tootellaUser.type == 2">
+                                            {{tootellaUser.designation == null ? 'No designation' : tootellaUser.designation}} at {{tootellaUser.company_name}}
+                                        </h2>
                                         <div class="addresspro">
                                             <p>{{tootellaUser.address}}</p>
                                             <p>
@@ -169,476 +95,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row row_12 threeinfocol">
+                        
+                        <profile-stat></profile-stat>
 
-                            <div class="col-sm-4 clinfocol">
-                                <a href="javascript:void(0);" class="panel_info bgred">
-                                    <h4>Total</h4>
-                                    <div class="clearfix">
-                                        <div class="pull-left">
-                                            <div class="txtbig">
-                                                <strong>5K</strong>
-                                            </div>
-                                            <h5 class="txtsm">Advertsiment</h5>
-                                        </div>
-                                        <div class="pull-right infimg">
-                                            <img src="assets/images/ico_add.png" class="img-responsive">
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-sm-4 clinfocol">
-                                <a href="javascript:void(0);" class="panel_info bgblue">
-                                    <h4>Total</h4>
-                                    <div class="clearfix">
-                                        <div class="pull-left">
-                                            <div class="txtbig">
-                                                <strong>3K</strong>
-                                            </div>
-                                            <h5 class="txtsm">Contacts</h5>
-                                        </div>
-                                        <div class="pull-right infimg">
-                                            <sub>
-                                                <span class="badge">3</span>
-                                            </sub>
-                                            <img src="assets/images/envelope_big.png" class="img-responsive">
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-sm-4 clinfocol">
-                                <a href="javascript:void(0);" class="panel_info bgdkgreen">
-                                    <h4>Total</h4>
-                                    <div class="clearfix">
-                                        <div class="pull-left">
-                                            <div class="txtbig">
-                                                <strong>10K</strong>
-                                            </div>
-                                            <h5 class="txtsm">Views</h5>
-                                        </div>
-                                        <div class="pull-right infimg">
-                                            <img src="assets/images/eye_big.png" class="img-responsive">
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-
-                        </div>
-
-                        <div class="white-bg">
-                            <div class="panel-body borderdiv">
-                                <ul class="listOffer list-unstyled">
-
-                                    <li>
-                                        <div class="row">
-                                            <figure class="col-sm-3">
-                                                <a href="javascript:void(0);">
-                                                    <img src="assets/images/car1.jpg" class="img-responsive">
-                                                </a>
-                                                <span class="coutfig">3</span>
-                                            </figure>
-                                            <div class="cont col-sm-9 clearfix">
-                                                <h3 class="loftitle">
-                                                    <a href="javascript:void(0);">
-                                                        <strong>THALES AUTOMOBILE</strong>
-                                                    </a>
-                                                </h3>
-                                                <div class="pull-left leftcont">
-                                                    <span class="addate block">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i> 3885 Sugarfoot Lane, Indianapolis, IN 36268</span>
-                                                    <span class="text-muted txt12 block">Vehicles</span>
-                                                </div>
-                                                <div class="clearfix twobtnsec">
-                                                    <a class="whishlistof pull-right" href="javascript:void(0);">
-                                                        <i class="fa fa-heart"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="btn btn-default radd30 btnevnt pull-right">Mettre en avant </a>
-
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <span class="pricebig block">
-                                                    <strong>100 000€</strong>
-                                                </span>
-                                                <span class="oftime text-muted">Today, 11:10pm</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/eye-md.png">&nbsp;&nbsp;5 total view</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/phone-md.png">&nbsp;&nbsp;3 view</span>
-                                                <span class="withbadge_ico relative">
-                                                    <sup>
-                                                        <span class="badge">3</span>
-                                                    </sup>
-                                                    <img src="assets/images/envelope_md.png">
-                                                </span>
-                                                <a href="javascript:void(0);" class="btnnewedit pull-right">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <!-- ]] -->
-
-
-                                    <li>
-                                        <div class="row">
-                                            <figure class="col-sm-3">
-                                                <a href="javascript:void(0);">
-                                                    <img src="assets/images/car1.jpg" class="img-responsive">
-                                                </a>
-                                                <span class="coutfig">3</span>
-                                            </figure>
-                                            <div class="cont col-sm-9 clearfix">
-                                                <h3 class="loftitle">
-                                                    <a href="javascript:void(0);">
-                                                        <strong>THALES AUTOMOBILE</strong>
-                                                    </a>
-                                                </h3>
-                                                <div class="pull-left leftcont">
-                                                    <span class="addate block">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i> 3885 Sugarfoot Lane, Indianapolis, IN 36268</span>
-                                                    <span class="text-muted txt12 block">Vehicles</span>
-                                                </div>
-                                                <div class="clearfix twobtnsec">
-                                                    <a class="whishlistof pull-right" href="javascript:void(0);">
-                                                        <i class="fa fa-heart"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="btn btn-default radd30 btnevnt pull-right">Mettre en avant </a>
-
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <span class="pricebig block">
-                                                    <strong>100 000€</strong>
-                                                </span>
-                                                <span class="oftime text-muted">Today, 11:10pm</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/eye-md.png">&nbsp;&nbsp;5 total view</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/phone-md.png">&nbsp;&nbsp;3 view</span>
-                                                <span class="withbadge_ico relative">
-                                                    <sup>
-                                                        <span class="badge">3</span>
-                                                    </sup>
-                                                    <img src="assets/images/envelope_md.png">
-                                                </span>
-                                                <a href="javascript:void(0);" class="btnnewedit pull-right">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <!-- ]] -->
-
-
-                                    <li>
-                                        <div class="row">
-                                            <figure class="col-sm-3">
-                                                <a href="javascript:void(0);">
-                                                    <img src="assets/images/car1.jpg" class="img-responsive">
-                                                </a>
-                                                <span class="coutfig">3</span>
-                                            </figure>
-                                            <div class="cont col-sm-9 clearfix">
-                                                <h3 class="loftitle">
-                                                    <a href="javascript:void(0);">
-                                                        <strong>THALES AUTOMOBILE</strong>
-                                                    </a>
-                                                </h3>
-                                                <div class="pull-left leftcont">
-                                                    <span class="addate block">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i> 3885 Sugarfoot Lane, Indianapolis, IN 36268</span>
-                                                    <span class="text-muted txt12 block">Vehicles</span>
-                                                </div>
-                                                <div class="clearfix twobtnsec">
-                                                    <a class="whishlistof pull-right" href="javascript:void(0);">
-                                                        <i class="fa fa-heart"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="btn btn-default radd30 btnevnt pull-right">Mettre en avant </a>
-
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <span class="pricebig block">
-                                                    <strong>100 000€</strong>
-                                                </span>
-                                                <span class="oftime text-muted">Today, 11:10pm</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/eye-md.png">&nbsp;&nbsp;5 total view</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/phone-md.png">&nbsp;&nbsp;3 view</span>
-                                                <span class="withbadge_ico relative">
-                                                    <sup>
-                                                        <span class="badge">3</span>
-                                                    </sup>
-                                                    <img src="assets/images/envelope_md.png">
-                                                </span>
-                                                <a href="javascript:void(0);" class="btnnewedit pull-right">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <!-- ]] -->
-
-
-                                    <li>
-                                        <div class="row">
-                                            <figure class="col-sm-3">
-                                                <a href="javascript:void(0);">
-                                                    <img src="assets/images/car1.jpg" class="img-responsive">
-                                                </a>
-                                                <span class="coutfig">3</span>
-                                            </figure>
-                                            <div class="cont col-sm-9 clearfix">
-                                                <h3 class="loftitle">
-                                                    <a href="javascript:void(0);">
-                                                        <strong>THALES AUTOMOBILE</strong>
-                                                    </a>
-                                                </h3>
-                                                <div class="pull-left leftcont">
-                                                    <span class="addate block">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i> 3885 Sugarfoot Lane, Indianapolis, IN 36268</span>
-                                                    <span class="text-muted txt12 block">Vehicles</span>
-                                                </div>
-                                                <div class="clearfix twobtnsec">
-                                                    <a class="whishlistof pull-right" href="javascript:void(0);">
-                                                        <i class="fa fa-heart"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="btn btn-default radd30 btnevnt pull-right">Mettre en avant </a>
-
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <span class="pricebig block">
-                                                    <strong>100 000€</strong>
-                                                </span>
-                                                <span class="oftime text-muted">Today, 11:10pm</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/eye-md.png">&nbsp;&nbsp;5 total view</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/phone-md.png">&nbsp;&nbsp;3 view</span>
-                                                <span class="withbadge_ico relative">
-                                                    <sup>
-                                                        <span class="badge">3</span>
-                                                    </sup>
-                                                    <img src="assets/images/envelope_md.png">
-                                                </span>
-                                                <a href="javascript:void(0);" class="btnnewedit pull-right">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <!-- ]] -->
-
-
-                                    <li>
-                                        <div class="row">
-                                            <figure class="col-sm-3">
-                                                <a href="javascript:void(0);">
-                                                    <img src="assets/images/car1.jpg" class="img-responsive">
-                                                </a>
-                                                <span class="coutfig">3</span>
-                                            </figure>
-                                            <div class="cont col-sm-9 clearfix">
-                                                <h3 class="loftitle">
-                                                    <a href="javascript:void(0);">
-                                                        <strong>THALES AUTOMOBILE</strong>
-                                                    </a>
-                                                </h3>
-                                                <div class="pull-left leftcont">
-                                                    <span class="addate block">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i> 3885 Sugarfoot Lane, Indianapolis, IN 36268</span>
-                                                    <span class="text-muted txt12 block">Vehicles</span>
-                                                </div>
-                                                <div class="clearfix twobtnsec">
-                                                    <a class="whishlistof pull-right" href="javascript:void(0);">
-                                                        <i class="fa fa-heart"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="btn btn-default radd30 btnevnt pull-right">Mettre en avant </a>
-
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <span class="pricebig block">
-                                                    <strong>100 000€</strong>
-                                                </span>
-                                                <span class="oftime text-muted">Today, 11:10pm</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/eye-md.png">&nbsp;&nbsp;5 total view</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/phone-md.png">&nbsp;&nbsp;3 view</span>
-                                                <span class="withbadge_ico relative">
-                                                    <sup>
-                                                        <span class="badge">3</span>
-                                                    </sup>
-                                                    <img src="assets/images/envelope_md.png">
-                                                </span>
-                                                <a href="javascript:void(0);" class="btnnewedit pull-right">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <!-- ]] -->
-
-
-                                    <li>
-                                        <div class="row">
-                                            <figure class="col-sm-3">
-                                                <a href="javascript:void(0);">
-                                                    <img src="assets/images/car1.jpg" class="img-responsive">
-                                                </a>
-                                                <span class="coutfig">3</span>
-                                            </figure>
-                                            <div class="cont col-sm-9 clearfix">
-                                                <h3 class="loftitle">
-                                                    <a href="javascript:void(0);">
-                                                        <strong>THALES AUTOMOBILE</strong>
-                                                    </a>
-                                                </h3>
-                                                <div class="pull-left leftcont">
-                                                    <span class="addate block">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i> 3885 Sugarfoot Lane, Indianapolis, IN 36268</span>
-                                                    <span class="text-muted txt12 block">Vehicles</span>
-                                                </div>
-                                                <div class="clearfix twobtnsec">
-                                                    <a class="whishlistof pull-right" href="javascript:void(0);">
-                                                        <i class="fa fa-heart"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="btn btn-default radd30 btnevnt pull-right">Mettre en avant </a>
-
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <span class="pricebig block">
-                                                    <strong>100 000€</strong>
-                                                </span>
-                                                <span class="oftime text-muted">Today, 11:10pm</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/eye-md.png">&nbsp;&nbsp;5 total view</span>
-                                                <span class="textwcicon text-muted">
-                                                    <img src="assets/images/phone-md.png">&nbsp;&nbsp;3 view</span>
-                                                <span class="withbadge_ico relative">
-                                                    <sup>
-                                                        <span class="badge">3</span>
-                                                    </sup>
-                                                    <img src="assets/images/envelope_md.png">
-                                                </span>
-                                                <a href="javascript:void(0);" class="btnnewedit pull-right">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                    <!-- ]] -->
-
-                                </ul>
-
-                            </div>
-
-                        </div>
+                        <profile-recent-ad></profile-recent-ad>
                     </div>
                 </div>
             </div>
         </section>
-
-        <div id="editProfile">
-            <modal
-                :is-show="editProfileShow"
-                transition="fadeDown"
-                :show-footer="false"
-                @close="editProfileShow=false"
-                :show-ok="false"
-                :show-cancel="false"
-                :backdrop-closable="false"
-            >
-                <div class="profilepicmodal">
-
-                    <h3 class="modal_title text-center">Edit Profile</h3>
-                    <!-- <pre>{{tootellaUser.profile_picture}}</pre> -->
-                    <form @submit.prevent="validateBeforeSubmit('ep')" enctype="multipart/form-data">
-                        <figure class="profileavatar round center-block">
-                            <img :src="tootellaUser.profile_picture" class="img-responsive">
-
-                        </figure>
-                        <label class="changephto center-block round">
-                            <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-                                accept="image/*" class="hidden input-file">
-
-                            <img src="assets/images/camera_ico.png" class="img-responsive">
-                        </label>
-
-                        <div class="formeditp">
-                            <div class="form-group">
-                                <label>First Name</label>
-                                <input v-validate="'required'" v-model="editProfileData.first_name" type="text" class="form-control" placeholder="First Name"
-                                    name="First Name" :class="{'input': true, 'is-danger': errors.has('First Name') }">
-                                <span v-show="errors.has('First Name')" class="help is-danger">{{ errors.first('First Name') }}</span>
-                            </div>
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input v-model="editProfileData.last_name" type="text" class="form-control" placeholder="Last Name" name="">
-                            </div>
-                            <div class="form-group">
-                                <label>Work at</label>
-                                <input type="text" v-model="editProfileData.company_name" class="form-control" placeholder="company name" name="">
-                            </div>
-                            <div class="form-group">
-                                <label>Designation</label>
-                                <input type="text" v-model="editProfileData.designation" class="form-control" placeholder="Designation" name="">
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" v-validate="'required|email'" v-model="editProfileData.email" class="form-control" placeholder="Email"
-                                    name="Email" :class="{'input': true, 'is-danger': errors.has('Email') }">
-                                <span v-show="errors.has('Email')" class="help is-danger">{{ errors.first('Email') }}</span>
-                            </div>
-                            <div class="form-group">
-                                <label>Phone No.</label>
-                                <input type="number" class="form-control" v-model="editProfileData.phone_number" placeholder="+971 000222665" name="">
-                            </div>
-                            <div class="form-group">
-                                <label>Address</label>
-                                <input id="autocompleteAddress" type="text" class="form-control" v-model="editProfileData.address" placeholder="Enter your address"
-                                    name="" @keyup="getPlace">
-                            </div>
-                            <div class="row row_5">
-                                <div class="col-sm-6 form-group">
-                                    <label>Zip Code</label>
-                                    <input type="text" class="form-control" placeholder="70058" v-model="editProfileData.zipcode" name="">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label>City</label>
-                                    <input type="text" class="form-control" placeholder="" v-model="editProfileData.city" name="">
-                                </div>
-                            </div>
-
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-warning btn-block btn-lg" value="Save Changes" name="">
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-            </modal>
-        </div>
 
     </div>
 </template>
@@ -646,6 +110,14 @@
 <script>
     import { HTTP } from '../../http';
     import { config } from '../../config';
+
+    import LeftAsideNav from '@/components/LeftAsideNav';
+    import UserProfileCard from '@/components/UserProfileCard';
+    
+    import ProfileCover from '@/components/ProfileCover';
+    import ProfileStat from '@/components/ProfileStat';
+    import ProfileRecentAd from '@/components/ProfileRecentAd';
+
     import {
         SweetModal,
         SweetModalTab
@@ -662,7 +134,12 @@
         components: {
             SweetModal,
             SweetModalTab,
-            VueGoogleAutocomplete
+            VueGoogleAutocomplete,
+            'left-aside-nav': LeftAsideNav,
+            'user-profile-card': UserProfileCard,
+            'profile-cover' : ProfileCover,
+            'profile-stat': ProfileStat,
+            'profile-recent-ad': ProfileRecentAd
         },
         data() {
             return {
@@ -707,9 +184,6 @@
             isFailed() {
                 return this.currentStatus === STATUS_FAILED;
             }
-        },
-        created() {
-
         },
         mounted() {
             this.reset();

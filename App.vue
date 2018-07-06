@@ -7,9 +7,13 @@
     <router-view/> -->
         <section class="fullpage">
             <!-- header -->
-            <app-header/>
+            <auth-header v-if="isAuth" />
+            <app-header v-else />
             <!-- main view -->
-            <router-view/>
+            <div class="topgap">
+                <!-- <loading-page v-if="$root.loading"></loading-page> -->
+                <router-view></router-view>
+            </div>
 
         </section>
 
@@ -27,17 +31,42 @@
 
 <script>
 import Header from '@/components/layout/Header'
+import AuthHeader from '@/components/layout/AuthHeader'
 import Footer from '@/components/layout/Footer'
+// import LoadingPage from '@/components/LoadingPage'
 import Login from './views/Login/Login'
+import {TOKEN} from './http';
+// require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 
 export default {
     components: {
         'app-header': Header,
+        'auth-header': AuthHeader,
         'app-footer': Footer,
-        'login': Login
+        'login': Login,
+        // 'loading-page': LoadingPage
+    },
+    data() {
+        return {
+            isAuth: false
+        }
     },
     mounted() {
         // console.log(this.$route.path)
+        if(TOKEN == undefined){
+            this.isAuth = false;
+        } else {
+            this.isAuth = true;
+        }
+        // console.log(TOKEN)
+        setTimeout(() => {
+            if(location.hash.split('#')[1] == 'editservice' || location.hash.split('#')[1] == 'addservice'){
+                location.hash = '';
+                if(sessionStorage.getItem('editService') != null){
+                    sessionStorage.removeItem('editService')
+                }
+            }
+        }, 1000)
     },
     methods: {
     }

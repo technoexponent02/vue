@@ -49,11 +49,11 @@
                 <div class="formGroup">
                     <div class="checkboxList">
                         <label class="chkBox">
-                            <input type="checkbox" name="terms" v-validate="'required'">
+                            <input type="checkbox" name="terms">
                             <i class="fa fa-square-o"></i> I would like to receive offers from partners of the site leboncoin likely to interest me
                         </label>
                     </div>
-                    <span class="help is-danger" v-show="errors.has('terms')">{{ errors.first('terms') }}</span>
+                    <!-- <span class="help is-danger" v-show="errors.has('terms')">{{ errors.first('terms') }}</span> -->
 
                     <div class="checkboxList">
                         <label class="chkBox">

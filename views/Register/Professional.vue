@@ -195,11 +195,12 @@ export default {
   },
   created(){
     //  category list fetching
-    HTTP.post(`categories`, {parent_id: this.$data.register.categoryParentId})
+    HTTP.get(`categories-all`)
     .then(response => {
-        if(response.data.status == "success"){
-            this.$data.categoryList = response.data.categories
-        }
+        // if(response.data.status == "success"){
+            // console.log(response.data)
+            this.$data.categoryList = response.data
+        // }
     })
     .catch(e => {
        console.log(e);

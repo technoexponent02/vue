@@ -1,5 +1,10 @@
 <template>
     <div class="searchpage togivegap cloffer">
+
+        <div class="catgloader pageload" v-if="loading">
+            <div style="width:100%;height:100%" class="lds-double-ring"><div></div><div></div></div>
+        </div>
+
         <div class="container">
 
 
@@ -62,6 +67,10 @@
                         :disabled="loading"
                     >
                         <i class="fa fa-th-large" aria-hidden="true"></i>&nbsp;
+                        <!-- <span id="thecatename">
+                            {{$store.state.placeAdSelectedCatgStore.title == '' ? 'Selectionnez votre categorie' : $store.state.placeAdSelectedCatgStore.title}}
+                        </span> -->
+
                         <span id="thecatename" v-if="$store.state.placeAdSelectedCatgListViewShow.length == 0">
                             Selectionnez votre categorie
                         </span>
@@ -196,7 +205,6 @@
                     <div class="col-sm-6">
                         <h3 class="ntitel">CITY<sup>*</sup></h3>
                         <div class="form-group withdlbtn">
-                            
                             <vue-google-autocomplete
                                 id="map2"
                                 ref="toAddress"
@@ -208,7 +216,6 @@
                                 country="in"
                             >
                             </vue-google-autocomplete>
-
                             <br>
                             <alert type="danger" v-if="errorObj.city != ''">
                                 {{errorObj.city}}
@@ -255,14 +262,17 @@
 
                     <div class="row">
                             <div class="col-sm-6 form-group">
+                                <!-- <datepicker placeholder="Date To"  v-model="dateFrom"></datepicker> -->
                                 <datepicker placeholder="Date From" class="form-control addatepicker" v-model="dateFrom"></datepicker>
+                                <!-- {{dateFrom}} -->
                                 <br>
                                 <alert type="danger" v-if="errorObj.from_date != ''">
                                     {{errorObj.from_date}}
                                 </alert>
                             </div>
                             <div class="col-sm-6 form-group">
-                                <datepicker placeholder="Date To" class="form-control addatepicker" v-model="dateTo"></datepicker>
+                                <datepicker placeholder="Date To" class="form-control addatepicker"  v-model="dateTo"></datepicker>
+                                <!-- {{dateTo}} -->
                                 <br>
                                 <alert type="danger" v-if="errorObj.to_date != ''">
                                     {{errorObj.to_date}}
@@ -275,11 +285,16 @@
                             <div class="col-sm-6 form-group timetake">
                                 <!-- <input type="text" placeholder="Time from" class="form-control time" name=""> -->
                                 <!-- <datepicker  v-model="timeFrom" placeholder="Time From" :options="{enableTime: true, enableSeconds: false, noCalendar: true, time_24hr: true}"></datepicker> -->
+                                <!-- <vue-timepicker format="HH:mm" v-model="timeFrom"></vue-timepicker> -->
+                                <!-- <vue-timepicker v-model="timeFrom" format="HH:mm"></vue-timepicker>
+                                {{timeFrom}} -->
                                 <input id="timeFrom" placeholder="Time From" class="form-control" value="">
                             </div>
                             <div class="col-sm-6 form-group timetake">
                                 <!-- <input type="text" placeholder="Time to" class="form-control time" name=""> -->
                                 <!-- <datepicker v-model="timeTo" placeholder="Time To" :options="{enableTime: true, enableSeconds: false, noCalendar: true, time_24hr: true}"></datepicker> -->
+                                <!-- <vue-timepicker format="HH:mm" v-model="timeTo"></vue-timepicker>
+                                {{timeTo}} -->
                                 <input id="timeTo" placeholder="Time To" class="form-control" value="">
                             </div>
                             <!-- {{timeFrom}} - {{timeTo}} -->
@@ -314,7 +329,7 @@
                     <br />
                     <br />
                     <alert title="success!" type="success" v-if="success" :closable="false">
-                        Well done! You successfully post an ad
+                        Well done! You successfully updated an ad
                     </alert>
                 </div>
 
@@ -333,7 +348,7 @@ import store from '../../store';
 import { VueEditor } from 'vue2-editor';
 import VueGoogleAutocomplete from 'vue-google-autocomplete';
 import Datepicker from 'vuejs-datepicker';
-import VueTimepicker from 'vue2-timepicker';
+import VueTimepicker from 'vue2-timepicker'
 
 const moreData = [
     {
@@ -374,7 +389,7 @@ const moreData = [
 ]
 
 export default {
-    name: 'CreateAd',
+    name: 'EditAd',
     components: {
         'create-ad': CreateAdModal,
         VueEditor,
@@ -408,6 +423,7 @@ export default {
             privacy: true,
             lat: '',
             lng: '',
+            contact_email: '',
             success: false,
             ad_image_url: config.ad_images,
             authData: AUTH_DATA,
@@ -441,29 +457,97 @@ export default {
                 title: '',
                 to_date: '',
                 category: ''
-            }
+            },
+            loading: true,
         }
     },
     created() {
-        sessionStorage.removeItem('categorySelected');
+        // console.log(this.$route.query.my_ad)
+        if(this.$route.query.my_ad == '' || this.$route.query.my_ad == undefined){
+            this.$router.push({ path: 'my-ad' })
+        } else {
+            sessionStorage.removeItem('categorySelected');
 
-        // let placeAdSelectedCatgListViewShowPayload = [];
-        // strore.commit('placeAdSelectedCatgListView', placeAdSelectedCatgListViewShowPayload);
+            HTTP.post(`categories?api_token=${TOKEN}`, {parent_id: this.createAdId, type_flag: 'O'})
+                .then(response => {
+                    let data = response.data;
+                    // console.log(data.categories);
+                    this.categoryData = data.categories;
+                    this.loading = false;
+                })
+                .catch(e => {
+                    console.log(e);
+                    alert('Something went wrong!');
+                })
 
-        HTTP.post(`categories?api_token=${TOKEN}`, {parent_id: this.createAdId, type_flag: 'O'})
-            .then(response => {
-                let data = response.data;
-                // console.log(data.categories);
-                this.categoryData = data.categories;
-                this.loading = false;
-            })
-            .catch(e => {
-                console.log(e);
-                alert('Something went wrong!');
-            })
+
+
+
+            HTTP.get(`my-ads/${this.$route.query.my_ad}?api_token=${TOKEN}`)
+                .then(response => {
+                    this.loading = false;
+                    let data = response.data;
+                    // console.log(data);
+
+                    // make data available
+                    this.adTitle = data.title;
+                    this.adDetails = data.description;
+                    this.adAmount = data.price;
+                    this.mainAddresss = data.address;
+                    this.address = data.city;
+                    this.phone = data.contact_phone;
+                    this.contact_email = data.contact_email;
+                    this.dateFrom = data.from_date;
+                    this.dateTo = data.to_date;
+                    this.timeFrom = data.from_time;
+                    this.timeTo = data.to_time;
+                    this.lat = data.lat;
+                    this.lng = data.lng;
+
+                    let adPhotos = data.photos;
+
+                    if(adPhotos.length > 3){
+                        moreData.map(m => this.adImageHolder.push(m));
+                        this.moreAdImage = false;
+                    }
+
+                    adPhotos.map((m, i) => {
+                        this.adImageHolder[i].data.push(m);
+                        this.adImageHolder[i].disabled = true;
+                    })
+
+                    // console.log(this.adImageHolder)
+
+                    // console.log(this.dateFrom);
+                    setTimeout(() => {
+                        $('#map2').val(data.city)
+                        $('.btnvaly').trigger('click');
+                    }, 200);
+
+
+                    store.commit('placeAdSelectedCatgListView', data.categories);
+                    store.commit('placeAdStateChange', 1);
+                    let storedata = JSON.stringify(data.category);
+                    sessionStorage.setItem('categorySelected', storedata);
+
+                })
+                .catch(e => {
+                    console.log(e);
+                    alert('Something went wrong!');
+                })
+
+        }
     },
     mounted() {
         this.initMap();
+
+        setTimeout(() => {
+            $('#timeFrom').val(this.timeFrom);
+            $('#timeTo').val(this.timeTo);
+        }, 2000);
+
+        // $('#timeFrom').val(this.timeFrom);
+        // $('#timeTo').val(this.timeTo);
 
         $('#timeFrom').clockpicker({
             autoclose: true
@@ -471,17 +555,16 @@ export default {
         $('#timeTo').clockpicker({
             autoclose: true
         });
-
     },
     destroyed() {
         let placeAdPayload = [];
         let placeAdSteppayload = 0;
-        let placeAdSelectedCatgPayload = {title: ''};
+        let placeAdStepPayload = {title: ''};
         let placeAdSelectedCatgListViewShowPayload = [];
 
         store.commit('placeAd', placeAdPayload);
         store.commit('placeAdStateChange', placeAdSteppayload);
-        store.commit('placeAdSelectedCatg', placeAdSelectedCatgPayload);
+        store.commit('placeAdSelectedCatg', placeAdStepPayload);
         store.commit('placeAdSelectedCatgListView', placeAdSelectedCatgListViewShowPayload);
     },
     methods: {
@@ -538,7 +621,7 @@ export default {
             })
             .catch(e => {
                 console.log(e);
-                alert('Something went wrong!');
+                // alert('Something went wrong!');
             })
 
 
@@ -607,10 +690,8 @@ export default {
         },
         hidePlaceAd(){
             this.isShowPlaceAd = false;
+
             this.showPopup = false;
-            if(sessionStorage.categorySelected == undefined){
-                store.commit('placeAdStateChange', 0)
-            }
         },
         getAddressData: function (addressData, placeResultData, id) {
             this.address = addressData.locality;
@@ -630,8 +711,8 @@ export default {
                 lat: this.lat,
                 lng: this.lng,
                 address: this.mainAddresss,
-                from_time: $('#timeFrom').val(),
-                to_time: $('#timeTo').val(),
+                from_time: this.timeFrom,
+                to_time: this.timeTo,
                 from_date: this.dateFrom,
                 to_date: this.dateTo,
                 contact_email: this.authData.email,
@@ -641,8 +722,9 @@ export default {
                 ad_image: []
             }
 
+            // console.log(localObj)
+
             this.adImageHolder.map((m) => {
-                // console.log(m)
                 m.data.map(p => localObj.ad_image.push(p));
             });
 
@@ -650,8 +732,9 @@ export default {
             localObj.to_date = moment(localObj.to_date).format('YYYY-MM-DD');
 
             // console.log(localObj)
+            
 
-            HTTP.post(`post-ad?api_token=${TOKEN}`, localObj)
+            HTTP.put(`update-ad/${this.$route.query.my_ad}?api_token=${TOKEN}`, localObj)
             .then(response => {
                 // console.log(response)
 

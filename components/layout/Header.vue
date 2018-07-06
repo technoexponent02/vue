@@ -13,7 +13,7 @@
     </div>
     <!-- register choose popup -->
 
-    <header>
+    <header class="  affix">
         <div class="container clearfix">
             <div class="logo pull-left">
                 <div class="vcenter">
@@ -36,7 +36,15 @@
                         Sign Up
                     </a>
                 </li>
-                <li><a href="javascript:void(0);" id="loginclick"><span class="ico"><img src="assets/images/key.png" class="img-responsive onvxs"><img src="assets/images/key-white.png" class="img-responsive oflg"></span>Log In</a></li>
+                <li>
+                    <a href="javascript:void(0);" id="loginclick">
+                        <span class="ico">
+                            <img src="assets/images/key.png" class="img-responsive onvxs">
+                            <img src="assets/images/key-white.png" class="img-responsive oflg">
+                        </span>
+                        Log In
+                    </a>
+                </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right loginmenu" v-else>
@@ -53,10 +61,18 @@
                     <li>
                         <router-link to="/place-ad">Place an ad</router-link>
                     </li>
-                    <li><a href="#">Deals </a></li>
-                    <li><a href="#">Requests</a></li>
-                    <li><a href="#">My Favourites</a></li>
-                    <li><a href="#">Shops</a></li>
+                    <li>
+                        <router-link to="/deals">Deals</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/requests">Requests</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/my-fovourite">My Favourites</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/shops">Shops</router-link>
+                    </li>
                 </ul>
             </div>
 
@@ -102,7 +118,6 @@ export default {
             // alert()
             this.$refs.register.open();
         },
-
         logout(){
             localStorage.removeItem('tootellaUser');
             window.location.href = '/';
